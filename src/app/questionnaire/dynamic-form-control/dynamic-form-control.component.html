@@ -1,4 +1,4 @@
-<div [formGroup]="form">
+<form [formGroup]="form">
     <div class="row">
         <ng-container *ngIf="control.type === 'textbox'">
             <div class="label w30">{{control.label}}</div>
@@ -38,4 +38,4 @@
             </div>
         </ng-container>
     </div>
-</div>
+</form>
