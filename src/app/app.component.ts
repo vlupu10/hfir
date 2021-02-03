@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../app/services/api-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,15 +12,16 @@ export class AppComponent implements OnInit {
   title = 'fhir-app-test';
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.apiService.getPatients().subscribe(
       data => {
-        console.log(data);
+        this.router.navigate(['/quest']);
       }
-    )
+    );
   }
 }
 

@@ -1,0 +1,10 @@
+<div class="qst-container">
+    <mat-card>
+        <span class="title">{{quest.subjectType[0]}} Questionnaire</span>
+        <span class="label">Status: {{quest.status}}</span>
+        <span class="label">Year: {{quest.date}}</span>
+    </mat-card>
+    <mat-card>
+        <app-dynamic-form [controls]="controls" [quest]="quest"></app-dynamic-form>
+    </mat-card>
+</div>

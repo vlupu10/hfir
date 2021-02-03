@@ -1,0 +1,41 @@
+<div [formGroup]="form">
+    <div class="row">
+        <ng-container *ngIf="control.type === 'textbox'">
+            <div class="label w30">{{control.label}}</div>
+            <mat-form-field class="form-field w50" floatLabel="never">
+                <input matInput [formControlName]="control.key" />
+                <mat-error>
+                    <div class="errorMessage" *ngIf="!isValid">This field is required</div>
+                </mat-error>
+            </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="control.type === 'checkbox'">
+            <div class="label w30">{{control.label}}</div>
+            <mat-checkbox class="w50 mt-25" color="primary" [formControlName]="control.key"></mat-checkbox>
+        </ng-container>
+        <ng-container *ngIf="control.type === 'datepicker'">
+            <div class="label w30">{{control.label}}</div>
+            <div class="w50">
+                <mat-form-field appearance="fill">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" [formControlName]="control.key">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="control.type === 'dropdown'">
+            <div class="label w30">{{control.label}}</div>
+            <div class="w50">
+                <mat-form-field class="form-field">
+                    <mat-select [formControlName]="control.key">
+                        <mat-option *ngFor="let opt of control.options" [value]="opt.key">{{opt.value}}</mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <div class="errorMessage" *ngIf="!isValid">This field is required</div>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+.row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.label {
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.18px;
+    color: #28282ADE;
+}
+
+.form-field {
+    font-size: 14px;
+    width: 65%;
+}
+
+mat-checkbox {
+    font-size: 13px;
+    width: 65%;
+}
+
+.mt-25 {
+    margin-top: 25px;
+}
+
+.mt18 {
+    margin-top: -18px;
+}
+
+.w50 {
+    width: 50%;
+}
+
+.w30 {
+    width: 30%;
+}

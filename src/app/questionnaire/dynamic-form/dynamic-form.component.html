@@ -1,0 +1,14 @@
+<div class="max-width">
+    <form (ngSubmit)="onLoad()" [formGroup]="form">
+        <div *ngFor="let control of controls" class="form-row">
+            <app-dynamic-form-control [control]="control" [form]="form"></app-dynamic-form-control>
+        </div>
+        <div class="form-row">
+            <!-- <button type="submit mt-25" [disabled]="!form.valid">Save</button> -->
+            <button class="mt-25" mat-raised-button type="submit" color="primary" [disabled]="!form.valid">Save</button>
+        </div>
+    </form>
+    <div *ngIf="payload" class="form-row mt-25">
+        <strong>Saved the following values</strong><br>{{payload}}
+    </div>
+</div>
