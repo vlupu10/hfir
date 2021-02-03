@@ -1,31 +1,68 @@
-import { TestBed, async } from '@angular/core/testing';
+// tslint:disable
+import { TestBed } from '@angular/core/testing';
+import { Injectable, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, Directive, Input } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { of as observableOf } from 'rxjs';
+
 import { AppComponent } from './app.component';
+import { ApiService } from '../app/services/api-service.service';
+import { Router } from '@angular/router';
+
+@Injectable()
+class MockApiService {}
+
+@Injectable()
+class MockRouter {
+  navigate() {};
+}
+
+@Directive({ selector: '[oneviewPermitted]' })
+class OneviewPermittedDirective {
+  @Input() oneviewPermitted;
+}
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  let fixture;
+  let component;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [ FormsModule, ReactiveFormsModule ],
       declarations: [
-        AppComponent
+        AppComponent,
+        OneviewPermittedDirective
       ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
+      providers: [
+        { provide: ApiService, useClass: MockApiService },
+        { provide: Router, useClass: MockRouter }
+      ]
+    }).overrideComponent(AppComponent, {
+
     }).compileComponents();
-  }));
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.debugElement.componentInstance;
   });
 
-  it(`should have as title 'fhir-app-test'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('fhir-app-test');
+  afterEach(() => {
+    component.ngOnDestroy = function() {};
+    fixture.destroy();
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('fhir-app-test app is running!');
+  it('should run #constructor()', async () => {
+    expect(component).toBeTruthy();
   });
+
+  it('should run #ngOnInit()', async () => {
+    component.apiService = component.apiService || {};
+    component.apiService.getPatients = observableOf({});
+    spyOn(component.apiService, 'getPatients').and.returnValue(observableOf({}));
+    component.router = component.router || {};
+    component.router.navigate = 'navigate';
+    spyOn(component.router, 'navigate');
+    component.ngOnInit();
+    expect(component.apiService.getPatients).toHaveBeenCalled();
+    expect(component.router.navigate).toHaveBeenCalled();
+  });
+
 });

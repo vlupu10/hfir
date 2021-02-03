@@ -24,7 +24,7 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.ctrlService.toFormGroup(this.controls);
-    this.form.markAllAsTouched();
+    if (this.form.markAllAsTouched) { this.form.markAllAsTouched(); }
   }
 
   onLoad(): void {
